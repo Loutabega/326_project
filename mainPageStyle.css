@@ -24,7 +24,7 @@ h1{
     height : 50px;
     background: #fff;
     border-right:none;
-    padding-left : 45px;
+    padding-left : 15px;
     color :  #000;
     font-size : 20px;
     border-radius: 5px;
@@ -33,8 +33,8 @@ h1{
 
 .SearchButtonIcon{
     width: 40px;
-    height: 50px;
+    height: 30px;
     border-top-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    border: solid;
+    border: none;
 }
