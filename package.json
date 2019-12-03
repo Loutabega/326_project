@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Loutabega/326_project/issues"
   },
-  "homepage": "https://github.com/Loutabega/326_project#readme"
+  "homepage": "https://github.com/Loutabega/326_project#readme",
+  "dependencies": {
+    "bootstrap": "^4.4.0"
+  }
 }

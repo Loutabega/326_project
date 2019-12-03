@@ -1,7 +1,8 @@
 
 body{
-    background :rgb(255, 255, 255);
+    background-color:white;
 }
+
 
 .box{
     margin : 100px auto;
@@ -27,14 +28,26 @@ h1{
     padding-left : 15px;
     color :  #000;
     font-size : 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: solid;
 }
 
-.SearchButtonIcon{
+#logo{
+    position: relative;
+    width:500;
+    height:160
+}
+#SearchButtonIcon{
     width: 40px;
     height: 30px;
-    border-top-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-radius: 10px;
     border: none;
+    background : black;
+    color: white;
 }
+
+#SearchButtonIcon:hover{
+    color : red;
+}
+
+
