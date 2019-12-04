@@ -11,7 +11,7 @@ header {
 }
 
 #header-logo{
-    width:  100px;
+    width:  150px;
     height: 100px;
 }
 
@@ -69,8 +69,8 @@ header .header-section div {
 }
 
 .comp-logo-image {
-    width: 250px;
-    height: 220px;
+    margin-top : 50px;
+    size : relative;
 }
 
 p {
