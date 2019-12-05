@@ -3,23 +3,17 @@ body{
     background-color:white;
 }
 
-
-.box{
+header{
+    background-color: black;
+    height: 50px
+    ;
+}
+.box1{
     margin : 100px auto;
     width : 500px;
-    height : 50px;
+    height : 100px;
 }
-h1{
-    font-size : 65px;
-    color : #111;
-    font-family: "Bowlby One SC";
-}
-.container{
- width: 300px;
- vertical-align : middle;
- white-space: nowrap;
- position: relative;
-}
+
 .container input#searchBar{
     width: 500px;
     height : 50px;
@@ -31,7 +25,6 @@ h1{
     border-radius: 10px;
     border: solid;
 }
-
 #logo{
     position: relative;
     width:500;
@@ -45,9 +38,6 @@ h1{
     background : black;
     color: white;
 }
-
 #SearchButtonIcon:hover{
     color : red;
 }
-
-

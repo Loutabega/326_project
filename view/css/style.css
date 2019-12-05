@@ -11,8 +11,9 @@ header {
 }
 
 #header-logo{
-    width:  150px;
+    width:  200px;
     height: 100px;
+    padding-left: 20px;
 }
 
 .container-fluid {
@@ -33,7 +34,8 @@ header .header-section {
 }
 
 .search-input {
-    padding-left: 20px;
+    padding-left: 150px;
+    border : none;
 }
 
 .search-input .url-input-field {
@@ -41,14 +43,20 @@ header .header-section {
     border: none;
     color: white;
     font-size: 14px;
-    width: 250px;
+    width: 400px;
     border-bottom: 1px solid white;
+}
+.search-input .url-input-field:hover{
+    border-bottom: 1px solid red;
 }
 
 .search-btn {
     background-color: black;
     color: white;
     border: none;
+}
+.search-btn:hover{
+    color : red;
 }
 header .header-section div {
     flex: 1;
@@ -178,16 +186,39 @@ p {
     border-bottom-color: rgb(8, 95, 247);
 }
 
-.star{
-    color:black;
-}
-.star.on{
-    color : red;
+#overall_div{
+    width: 200px;
 }
 
-.rateButton{
-    background : black;
-    color:white;
-    border :none;
-    border-radius: 5px;
+.star{
+    background: url("../img/devil.png") no-repeat right 0;
+    background-size: auto 100%;
+    width: 30px;
+    height:30px;
+    display: inline-block;
+    cursor: pointer;
+}
+.star.on{
+    background: url("../img/angel.png") no-repeat right 0;
+    background-size: auto 100%;
+    width: 30px;
+    height:30px;
+}
+
+.devil_rate{
+    width: 40px;
+    height:40px;
+}
+#review_form{
+    display: none;
+}
+#devil_icon{
+    margin-left: 20px;
+    width: 50px;
+    height:50px;
+}
+#angel_icon{
+    margin-left: 20px;    
+    width: 50px;
+    height: 50px;
 }
