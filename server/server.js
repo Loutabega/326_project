@@ -13,7 +13,7 @@ const Article = mongoose.model("Article", CompanyArticleSchema)
 
 const CompanyRatingSchema = new mongoose.Schema({
     company: {type: String, required: true},
-    overallRating: {type: Number, min: 0, max: 100, required: true}
+    overallRating: {type: Number, min: 0, max: 100}
 })
 const Rating = mongoose.model("Rating", CompanyRatingSchema)
 
