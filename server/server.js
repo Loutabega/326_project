@@ -20,7 +20,7 @@ const Rating = mongoose.model("Rating", CompanyRatingSchema)
 // Routing
 const UIRouter = express.Router()
 app.use('/', UIRouter);
-UIRouter.use(express.static(path.join(__dirname + './../public')))
+UIRouter.use(express.static(path.join(__dirname + './../view')))
 
 app.get('/companies/:company/articles', (req, res) => {
     const company = req.params.company
