@@ -13,6 +13,11 @@ $(document).ready(function () {
         $(this).hide();
     });
 
+    $("#addArticleBtn").click(function(){
+        $("#article_form").toggle();
+        $(this).hide();
+    });    
+
 });
 
 

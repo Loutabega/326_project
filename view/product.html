@@ -24,7 +24,7 @@
               <div class="row">
                 <div class="header-section">
                     <div class="logo">
-                        <img src="img/logosmw.png" alt="ecorp-logo" id="header-logo" />
+                        <img src="img/logow.png" alt="ecorp-logo" id="header-logo">
                     </div>                   
                     <div class="search">
                         <div class="search-input">
@@ -99,6 +99,13 @@
                   <div class="tab-content" id="pills-tabContent">
                       <div class="tab-pane fade show active" id="tabs-1" role="tabpanel">
                         <h2>Company Overview</h2>
+                        <div class="container" id="overall_div">
+                                <h2>OVERALL</h2> 
+                                <div class="row">
+                                    <img src="img/angel.png" alt="E corp" id="devil_icon">
+                                    <h1>4.2</h1>                          
+                                </div>
+                            </div>
                         <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
                       </div>
                       <div class="tab-pane fade" id="tabs-2" role="tabpanel">                     
@@ -162,13 +169,6 @@
                       </div>
                       <div class="tab-pane fade" id="tabs-3" role="tabpanel">
                         <h2>Ratings &amp; Reviews</h2>
-                        <div class="container" id="overall_div">
-                            <h2>OVERALL</h2> 
-                            <div class="row">
-                                <img src="img/angel.png" alt="E corp" id="devil_icon">
-                                <h1>4.2</h1>                          
-                            </div>
-                        </div>
                         <button type="button" class="btn btn-primary" id="createReviewBtn" 
                                 style="background-color: black; border:none; margin-top: 10px;">Creat Review</button>
                             <form action="#" method="POST" class="form-horizontal" id="review_form">
@@ -195,7 +195,17 @@
                                     <input class="btn btn-primary" type="submit" value="Submit">
                                 </div>   
                             </form>
-                    
+                            <button type="button" class="btn btn-primary" id="addArticleBtn" 
+                            style="background-color: red; border:none; margin-top: 10px;">Add Article</button>
+                            <form action="#" method="POST" class="form-horizontal" id="article_form">
+                                <div class="form-group" id="articleLink">
+                                    <input type="url" class="form-control" id="article_url" placeholder="Place the article link...">
+                                </div>
+                                <div class="form-group" id="bnt_form">  
+                                        <input class="btn btn-primary" type="submit" value="Submit">
+                                </div>  
+                            </form>
+
                         <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
                         <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
                       </div>
@@ -205,6 +215,17 @@
           </div>
       </div>
 
+      <footer id="sticky-footer">
+            <div class="container-fluid extend">
+                <div class="row">
+                  <div class="header-section">
+                      <div class="logo">
+                          <img src="img/logosmw.png" alt="ecorp-logo" id="footer-logo" />
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </footer>
 
       <!-- Bootstrap core JavaScript
     ================================================== -->
