@@ -3,6 +3,7 @@ const app = express()
 const path = require('path')
 const PORT = process.env.PORT || 2986
 const mongoose = require('./db')
+var mustacheExpress = require('mustache-express')
 
 // Mongoose Schemas
 const CompanyArticleSchema = new mongoose.Schema({
@@ -20,6 +21,9 @@ const Rating = mongoose.model("Rating", CompanyRatingSchema)
 // Routing
 const UIRouter = express.Router()
 app.use('/', UIRouter);
+app.set('views', './view');
+app.engine('html', mustacheExpress());
+app.set('view engine', 'html');
 UIRouter.use(express.static(path.join(__dirname + './../view')))
 
 app.get('/companies/:company/articles', (req, res) => {
@@ -54,6 +58,34 @@ app.get('/companies/:company/rating', (req, res) => {
     } catch (err){
         res.sendStatus(500)
     }
+})
+
+app.get('/', function (req, res) {
+    res.render('mainPage');
+})
+
+app.get('/Amazon', function (req, res) {
+    info = {
+        "product-name": "Wildorn Dover Premium Mens Ski Jacket - Designed in USA - Insulated Waterproof",
+        "comp-name": "Amazon",
+        "location": "Seattle, WA",
+        "industry": "Online Marketplace",
+        "about": "Amazon.com, Inc., is an American multinational technology company based in Seattle that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. It is considered one of the Big Four tech companies, along with Google, Apple, and Facebook",
+        "ratings": 4.2,
+        "links": {
+            "Website": "https://amazon.com",
+            "Facebook": "https://facebook.com"
+        },
+        "articles": [
+            {
+                "title": "One thing I was sure of, that my uncle Leo was definitely the hero of my childhood.",
+                "published_date": "October 17, 2008",
+                "excerpt": "The smell of his Old Spice cologne carried me back into that lost childhood more than the home movies did. My uncle didn't know it, but It was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. Leo was the last dinosaur that smelled of cheap cologne.",
+                "url": "https://nytimes.com"
+            },
+        ]
+    }
+    res.render('product', info)
 })
 
 app.listen(PORT, () => {console.log("Main server listening")})

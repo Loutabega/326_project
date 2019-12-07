@@ -94,7 +94,7 @@
                           <div class="row comp-info-section">
                               <div class="col-md-6">
                                   <h4>About</h4>
-                                  <p>From our Minneapolis-based headquarters with over 1,800 stores and 39 distribution centers across the U.S., Target offers a world of possibilities in an environment that empowers its team members to innovate and contribute ideas. Join a company that’s focused on moving forward to what’s next while giving back to the communities they serve. Since 1946, Target has given 5 percent of its profit to communities, which today equals millions of dollars a week</p>
+                                  <p>{{about}}</p>
                               </div>
                               <div class="col-md-6">
                                   <div class="row">
@@ -104,7 +104,7 @@
                                                   <h4>Location</h4>
                                               </div>
                                               <div class="col-md-12">
-                                                  <p>Seattle, WA</p>
+                                                  <p>{{location}}</p>
                                               </div>
                                           </div>
                                       </div>
@@ -115,7 +115,7 @@
                                               </div>
                                               <div class="col-md-12">
                                                   <div>
-                                                      <img src="img/angel.png" alt="E corp" id="devil_icon"> <span style="font-size: 26px;">4.2</span>
+                                                      <img src="img/angel.png" alt="E corp" id="devil_icon"> <span style="font-size: 26px;">{{ratings}}</span>
 
                                                   </div>
                                               </div>
@@ -127,7 +127,7 @@
                                                   <h4>Industry</h4>
                                               </div>
                                               <div class="col-md-12">
-                                                  <p>Online Marketplace</p>
+                                                  <p>{{industry}}</p>
                                               </div>
                                           </div>
                                       </div>
@@ -138,8 +138,8 @@
                                               </div>
                                               <div class="col-md-12">
                                                   <ul style="list-style:none">
-                                                      <li><a href="https://amazon.com">Main Page</a></li>
-                                                      <li><a href="https://facebook.com">Facebook</a></li>
+                                                      <li><a href={{links.Website}}>Main Page</a></li>
+                                                      <li><a href={{links.Facebook}}>Facebook</a></li>
                                                   </ul>
                                               </div>
                                           </div>
@@ -151,60 +151,22 @@
                           </div>
                       </div>
                       <div class="tab-pane fade" id="tabs-2" role="tabpanel">                     
-                        <div class="article-list">
-                            <article class="article">                          
-                            
-                                <time class="article-date">October 17, 2008</time>
-                                <h1 class="article-title">
-                                    <a href="post.html">One thing I was sure of, that my uncle Leo was definitely the hero of my childhood.</a>
-                                </h1>
-                                <div class="article-content">
-                                    <p>
-                                        The smell of his
-                                        <a href="gallery.html">"Old Spice"</a>
-                                        cologne carried me back into that lost childhood more than the home movies did. My uncle didn't know it, but It was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. Leo was the last dinosaur that smelled of cheap cologne.
-                                    </p>
-                                </div>
-                            </article>
-                            <article class="article">
-                            
-                                <time class="article-date">October 17, 2008</time>
-                                <h1 class="article-title">
-                                    <a href="post.html">And he believed in the American dream.</a>
-                                </h1>
-                                <div class="article-content">
-                                    <p>I was crazy about him, because he believed in miracles. And Even though he lived inside of life and sold Cadillacs, he always looked like a ten-year-old boy whose sleeves were too long. When I was ten, Leo gave me this great movie camera. And My mother always hoped I'd become the next Milton Berle. But dreams of houses, and cars, and fresh-cut lawns aren't dreams when they become real. And somehow I understood what my mother meant by "Good morning, Columbus." And even if my mother didn't like what I was doing with my life, I think she'd understand.</p>
-                                </div>
-                            </article>
-                            <article class="article">
-                                                    
-                                <time class="article-date">October 17, 2008</time>
-                                <h1 class="article-title">
-                                    <a href="post.html">When I was 11, I got this really weird earache that wouldn't go away.</a>
-                                </h1>
-                                <div class="article-content">
-                                    <p>I went to about a hundred doctors but none of them could help me... So what Leo did was he went into Mexico, and brought back this fat lady witch doctor who did this mumbo-jumbo and fixed me right up. I was grateful, but somehow I thought I might've been better off mute.</p>
-                                </div>
-                            </article>
-                            <article class="article">
-                            
-                                <ul class="article-categories">
-                                    <li>
-                                        <a href="/">Category 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="/">Category 1</a>
-                                    </li>
-                                </ul>
-                                <time class="article-date">October 17, 2008</time>
-                                <h1 class="article-title">
-                                    <a href="post.html">All in all, I had a very happy childhood.</a>
-                                </h1>
-                                <div class="article-content">
-                                    <p>My father was a border guard, who spent most of his life trying to keep people from crossing lines. Every night for 15 years, he'd go out and smooth down the road between Mexico and Arizona, and every morning he'd be out there looking for footprints in the dirt. But my father always said that work was like a hat you put on your head. And even if you didn't have pants, you didn't have to walk down the street ashamed of your ass, so long as you had a hat.</p>
-                                </div>
-                            </article>
-                        </div>
+                          <div class="article-list">
+                              {{#articles}}
+                              <article class="article">
+
+                                  <time class="article-date">{{published_date}}</time>
+                                  <h1 class="article-title">
+                                      <a href={{url}}>{{title}}</a>
+                                  </h1>
+                                  <div class="article-content">
+                                      <p>
+                                          {{excerpt}}
+                                      </p>
+                                  </div>
+                              </article>
+                              {{/articles}}
+                          </div>
                         <div style="padding-left:15px;" class="row">
                             <a style="color:blue"href="#"> More articles >> </a>
                         </div>
