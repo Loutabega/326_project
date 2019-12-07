@@ -40,7 +40,7 @@
           <div class="container-fluid product-section">
               <div class="row">
                   <div class="col-md-4 picture-section">
-                      <img alt="jacket image" class="product-image" id="image1" itemprop="image" src="img/jacket.jpg" />
+                      <img alt="jacket image" class="product-image" id="image1" itemprop="image" src={{product-img}} />
                   </div>
                   <div class="col-md-8 product-info">
                       <div class="row">
@@ -48,7 +48,7 @@
                               <div class="row">
                                   <h2>
                                       <a target="_blank" class="product-title" href="https://smile.amazon.com/dp/B07WQ1R4L3">
-                                          <b>Wildorn Dover Premium Mens Ski Jacket - Designed in USA - Insulated Waterproof</b>
+                                          <b>{{product-name}}</b>
                                       </a>
                                   </h2>
                               </div>
@@ -62,7 +62,7 @@
                               <p>
                               
                                   <a href="https://www.amazon.com">
-                                      <img alt="amazon-logo" class="comp-logo-image" src="img/amazon.png" />
+                                      <img alt="amazon-logo" class="comp-logo-image" src={{comp-logo}} />
                                   </a>
                               </p>
                           </div>
@@ -104,7 +104,7 @@
                                                   <h4>Location</h4>
                                               </div>
                                               <div class="col-md-12">
-                                                  <p>{{location}}</p>
+                                                  <p style="padding-left: 5px">{{location}}</p>
                                               </div>
                                           </div>
                                       </div>
@@ -127,7 +127,7 @@
                                                   <h4>Industry</h4>
                                               </div>
                                               <div class="col-md-12">
-                                                  <p>{{industry}}</p>
+                                                  <p style="padding-left: 5px">{{industry}}</p>
                                               </div>
                                           </div>
                                       </div>
@@ -268,7 +268,7 @@
                     </div>
                     <div class="col-md-4">
                         <ul id="footer-list">
-                            <li><a href="#">Home</a></li>
+                            <li><a href="./mainPage.html">Home</a></li>
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
