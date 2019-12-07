@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    let amazonLink = sessionStorage.getItem('amazonLink');
+    alert(amazonLink);
 
     $("#tabs").tabs();
 
