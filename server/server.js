@@ -9,7 +9,6 @@ const schemas = require('./schemas')
 const requests = require('./mongo_requests')
 const axios = require("axios")
 const cheerio = require("cheerio")
-const bodyParser = require('body-parser');
 
 
 // Mongoose Models
