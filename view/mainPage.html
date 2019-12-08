@@ -19,8 +19,10 @@
       <section class ="box1">
          <img src="img/logo.png" alt="E corp" id="logo">
          <div class = "container">
-            <input type = "search" class="lead" id = "searchBar" placeholder="Paste an URL for Amazon product here...   " />
-            <button id = "SearchButtonIcon"><i class="fas fa-search"></i></button>
+            <form action="/processLink" method="post">
+                 <input type="search" class="lead" id="searchBar" name="searchBar" placeholder="Paste an URL for Amazon product here...   " />
+                 <button type="submit" id="SearchButtonIcon"><i class="fas fa-search"></i></button>
+             </form>
          </div>
       </section>
 
