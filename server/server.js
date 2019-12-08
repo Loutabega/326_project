@@ -4,6 +4,9 @@ const path = require('path')
 const PORT = process.env.PORT || 2986
 const mongoose = require('./db')
 var mustacheExpress = require('mustache-express')
+const axios = require("axios")
+const cheerio = require("cheerio")
+
 
 // Mongoose Schemas
 const CompanyArticleSchema = new mongoose.Schema({
@@ -64,8 +67,24 @@ app.get('/', function (req, res) {
     res.render('mainPage');
 })
 
+
+
 //example of rendering a page with json object
 app.get('/Amazon', function (req, res) {
+    siteURL = "https://www.amazon.com/Apple-MWP22AM-A-AirPods-Pro/dp/B07ZPC9QD4/ref=sr_1_3?crid=33UPUV5CKKGKU&keywords=apple+airpods&qid=1575820602&sprefix=apple+%2Caps%2C168&sr=8-3"
+    axios.get(siteURL)
+        .then((response) => {
+            if (response.status === 200) {
+                const html = response.data;
+                const $ = cheerio.load(html);
+                let info = {
+                    "product-name": $("#productTitle").text().trim(),
+                    "comp-name": $("#bylineInfo").text().trim(),
+                    "product-img": $('#landingImage').attr('src')
+                };
+                res.render('product', info);
+            }
+        }, (error) => console.log(err));
     info = {
         "product-name": "Wildorn Dover Premium Mens Ski Jacket - Designed in USA - Insulated Waterproof",
         "product-img": "./img/jacket.jpg",
@@ -95,7 +114,7 @@ app.get('/Amazon', function (req, res) {
             },
         ]
     }
-    res.render('product', info)
+    
 })
 
 app.listen(PORT, () => {console.log("Main server listening")})
