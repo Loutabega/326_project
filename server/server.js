@@ -7,6 +7,9 @@ var mustacheExpress = require('mustache-express')
 const bodyParser = require('body-parser');
 const schemas = require('./schemas')
 const requests = require('./mongo_requests')
+const axios = require("axios")
+const cheerio = require("cheerio")
+
 
 // Mongoose Models
 const Article = mongoose.model("Article", schemas.article)
@@ -113,10 +116,29 @@ app.get('/', function (req, res) {
     res.render('mainPage');
 })
 
+
+
+//example of rendering a page with json object
 app.get('/Amazon', function (req, res) {
+    siteURL = "https://www.amazon.com/Apple-MWP22AM-A-AirPods-Pro/dp/B07ZPC9QD4/ref=sr_1_3?crid=33UPUV5CKKGKU&keywords=apple+airpods&qid=1575820602&sprefix=apple+%2Caps%2C168&sr=8-3"
+    axios.get(siteURL)
+        .then((response) => {
+            if (response.status === 200) {
+                const html = response.data;
+                const $ = cheerio.load(html);
+                let info = {
+                    "product-name": $("#productTitle").text().trim(),
+                    "comp-name": $("#bylineInfo").text().trim(),
+                    "product-img": $('#landingImage').attr('src')
+                };
+                res.render('product', info);
+            }
+        }, (error) => console.log(err));
     info = {
         "product-name": "Wildorn Dover Premium Mens Ski Jacket - Designed in USA - Insulated Waterproof",
+        "product-img": "./img/jacket.jpg",
         "comp-name": "Amazon",
+        "comp-logo": "./img/amazon.png",
         "location": "Seattle, WA",
         "industry": "Online Marketplace",
         "about": "Amazon.com, Inc., is an American multinational technology company based in Seattle that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. It is considered one of the Big Four tech companies, along with Google, Apple, and Facebook",
@@ -132,9 +154,16 @@ app.get('/Amazon', function (req, res) {
                 "excerpt": "The smell of his Old Spice cologne carried me back into that lost childhood more than the home movies did. My uncle didn't know it, but It was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. Leo was the last dinosaur that smelled of cheap cologne.",
                 "url": "https://nytimes.com"
             },
+
+            {
+                "title": "Splintered Isle: A Journey Through Brexit Britain",
+                "published_date": "December 7, 2019",
+                "excerpt": "The smell of his Old Spice cologne carried me back into that lost childhood more than the home movies did. My uncle didn't know it, but It was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. Leo was the last dinosaur that smelled of cheap cologne.",
+                "url": "https://nytimes.com"
+            },
         ]
     }
-    res.render('product', info)
+    
 })
 
 app.listen(PORT, () => {console.log("Main server listening")})
