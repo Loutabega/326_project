@@ -116,11 +116,13 @@ app.get('/', function (req, res) {
     res.render('mainPage');
 })
 
-
+app.post('/processLink', function (req, res) {
+    res.redirect(307, '/product');
+})
 
 //example of rendering a page with json object
-app.get('/Amazon', function (req, res) {
-    siteURL = "https://www.amazon.com/Apple-MWP22AM-A-AirPods-Pro/dp/B07ZPC9QD4/ref=sr_1_3?crid=33UPUV5CKKGKU&keywords=apple+airpods&qid=1575820602&sprefix=apple+%2Caps%2C168&sr=8-3"
+app.post('/product', function (req, res) {
+    siteURL = req.body.searchBar;    
     axios.get(siteURL)
         .then((response) => {
             if (response.status === 200) {
