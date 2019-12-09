@@ -105,9 +105,7 @@ header .header-section div {
 
 .product-image {
     margin-top:10px;
-	margin-left: 70px;
-    size : relative;
-	border-radius: 5px;
+    resize: both;
 }
 
 

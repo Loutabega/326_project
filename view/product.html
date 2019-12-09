@@ -28,8 +28,11 @@
                     </div>                   
                     <div class="search">
                         <div class="search-input">
-                            <input type="text" name="url" id="url" size="25" class="url-input-field" placeholder="Paste any products on amazon here..." />
-                            <button class="search-btn"><i class="fa fa-search"></i></button>
+                            <form action="/product" method="post">
+                                <input type="text" name="searchBar" id="searchBar" size="25" class="url-input-field" placeholder="Paste any products on amazon here..." />
+                                <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>                            
