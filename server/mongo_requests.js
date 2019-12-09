@@ -5,6 +5,7 @@ const mongoose = require("./db")
 const Article = mongoose.model("Article", schemas.article)
 const Rating = mongoose.model("Rating", schemas.rating)
 const Company = mongoose.model("Company", schemas.company)
+const Review = mongoose.model("Review", schemas.review)
 
 function getCompanyArticles(company) {
     return new Promise((resolve, reject) => {
@@ -61,6 +62,23 @@ function getCompanyInfo(company){
     })
 }
 
+function getUserReview(company){
+    return new Promise((resolve, reject)=>{
+        try{
+            Review.findOne({ company: company}, (err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                else{
+                    resolve(res)
+                }
+            })
+        } catch (err){
+            console.log(err)
+            reject(err)
+        }
+    })
+}
 function insertCompanyArticle(article) {
     return new Promise((resolve, reject) => {
         try{
@@ -123,9 +141,34 @@ function insertCompanyInfo(companyInfo) {
     })
 }
 
+function insertUserReview(review){
+    return new Promise((resolve, reject) =>{
+        try{
+            Review.findOneAndUpdate(
+                {company : review.company},
+                reivew,
+                {upsert: true, new: true, runValidators: true},
+                (err, doc) => {
+                    if (err) {
+                        console.log(err)
+                        reject(err)
+                    }
+                    else {
+                        console.log(doc)
+                        resolve(doc)
+                    }
+                })
+        }catch (err){
+                reject(err)
+        }   
+    })
+}
+
 exports.insertCompanyArticle = insertCompanyArticle
 exports.insertCompanyRating = insertCompanyRating
 exports.insertCompanyInfo = insertCompanyInfo
+exports.insertUserReview =insertUserReview
 exports.getCompanyArticles = getCompanyArticles
 exports.getCompanyRating = getCompanyRating
 exports.getCompanyInfo= getCompanyInfo
+exports.getUserReview = getUserReview

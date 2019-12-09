@@ -25,4 +25,11 @@ const CompanyInfoSchema = new mongoose.Schema({
     }
 })
 
-module.exports = {connection: mongoose, company: CompanyInfoSchema, rating: CompanyRatingSchema, article: CompanyArticleSchema}
+const UserReviewSchema = new mongoose.Schema({
+    company: {type : String, required : true},
+    title : {type : String},
+    user : {type : String},
+    review : {type : String}
+})
+
+module.exports = {connection: mongoose, company: CompanyInfoSchema, rating: CompanyRatingSchema, article: CompanyArticleSchema,review: UserReviewSchema}

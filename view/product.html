@@ -220,19 +220,7 @@
                         </div>
                         <button type="button" class="btn btn-primary" id="createReviewBtn" 
                                 style="background-color: black; border:none; margin-top: 10px;">Create</button>
-                            <form action="/review" method="POST" class="form-horizontal" id="review_form">
-                                <div class="form-check" id="radio">
-                                    <input type="radio" class="form-check-input" name="checkForm" id="check_review" value="option1" checked>
-                                    <label class="form-check-label" for="check_review">
-                                        Create Review
-                                    </label>
-                                </div>
-                                <div class="form-check" id="radio">
-                                    <input type="radio" class="form-check-input" name="checkForm" id="check_article" value="option2">
-                                    <label class="form-check-label" for="check_article">
-                                        Add article
-                                    </label>
-                                </div>                                
+                            <form action="/review" method="POST" class="form-horizontal" id="review_form">                           
                                 <div class="form-group" id="rating_form">
                                     <label class="col-md-1">Rating :</label>
                                     <div class="col-md-9" id="rating">
@@ -254,18 +242,8 @@
                                 </div> 
                                 <div class="form-group" id="bnt_form">  
                                     <input class="btn btn-dark" type="submit" value="Submit">
-                                    <input class="btn btn-light" type="reset" value="Cancel">
+                                    <input class="btn btn-light" type="reset" id="cancel" value="Cancel">
                                 </div>   
-                            </form>
-                            <form action="#" method="POST" class="form-horizontal" id="article_form">
-                                <div class="form-group" id="articleLink">
-                                    <input type="url" class="form-control" name="article_url" placeholder="Place the article link...">
-                                </div>
-                                <div class="button-group" id="bnt_form">  
-                                    <input class="btn btn-dark" type="submit" value="Submit">
-                                     <input class="btn btn-light" type="reset" value="Cancel">
-                                </div>  
-                            </form>
                       </div>
                   </div>
                   
