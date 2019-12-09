@@ -155,37 +155,45 @@ app.post('/processLink', function (req, res) {
 
 
 //example of rendering a page with json object
-app.post('/product', async function (req, res) {
+app.post('/product', function (req, res) {
     var siteURL = req.body.searchBar;
 
     //Test Block added here
    
-    var info = await getInfo(siteURL);   
-    res.render('product', info);
-    ///Block end here
+    // var info = await getInfo(siteURL);   
+    // res.render('product', info);
+    //Block end here
 
-    //const info = {}
-    axios.get(siteurl)
+    const info = {}
+    axios.get(siteURL)
         .then((response) => {
             if (response.status === 200) {
                 const html = response.data;
                 const $ = cheerio.load(html);
  
 
-                info.product_name = $("#producttitle").text().trim();
-                info.comp_name = $("#bylineinfo").text().trim();
-                info.product_img = $('#landingimage').attr('src');
+                info.product_name = $("#productTitle").text().trim();
+                info.comp_name = $("#bylineInfo").text().trim();
+                info.product_img = $('#landingImage').attr('src');
 
-                companyarticles = requests.getcompanyarticles(info.comp_name)
-                companyrating = requests.getcompanyrating(info.comp_name)
-                companyinfo = requests.getcompanyinfo(info.comp_name)
+                console.log("Company: " + info.comp_name)
 
-                promise.all([companyarticles, companyrating, companyinfo])
+                companyarticles = getInfo.getArticles(info.comp_name)
+                companyrating = requests.getCompanyRating(info.comp_name)
+                companyinfo = requests.getCompanyInfo(info.comp_name)
+
+                Promise.all([companyarticles, companyrating, companyinfo])
                     .then((companyinfofields) => {
                         let articles = companyinfofields[0]
+                        console.log("articles: \n")
+                        console.log(articles)
                         const ratings = companyinfofields[1]
+                        console.log("ratings: \n")
                         console.log(ratings)
                         const compinfo = companyinfofields[2]
+                        console.log("compinfo: \n")
+                        console.log(compinfo)
+
                         articles = articles.map((object) => {return {
                             url: object.url, 
                             title: object.title, 
@@ -197,8 +205,9 @@ app.post('/product', async function (req, res) {
                         info.about = compinfo.about;
                         info.links = compinfo.links;
                         info.industry = compinfo.industry;
-                        info.ratings = ratings.overallaverage;
+                        info.ratings = ratings.overallAverage;
 
+                        console.log("\n\nFinal Info:")
                         console.log(info)
 
                         res.render('product', info);

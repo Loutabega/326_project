@@ -25,23 +25,64 @@ const getInfo = async (siteUrl) => {
 }
 
 const fetchArticles = async (articlesUrl) => {
-    
     const result = await axios.get(articlesUrl);
     return cheerio.load(result.data);
 };
 
-const getArticles = async (name) => {
-    var articlesUrl = "https://www.csrhub.com/CSR_and_sustainability_information/" + name + "/CSR_news";
-    const $ = await fetchArticles(articlesUrl);
-    let articles = [];
-    $(".content-page__news_feed a").each(function (i) {
-        var article = {
-            "title": $(this).text().trim(),
-            "url": $(this).attr('href')
+exports.getArticles = (name) => {
+    return new Promise((resolve, reject) => {
+        try{
+            var articlesUrl = "https://www.csrhub.com/CSR_and_sustainability_information/" + name + "/CSR_news";
+            fetchArticles(articlesUrl).then($ => {
+                let articles = [];
+                $(".content-page__news_feed a").each(function (i) {
+                    var article = {
+                        "title": $(this).text().trim(),
+                        "url": $(this).attr('href')
+                    }
+                    articles.push(article);
+                });
+                const articlePromises = []
+                articles.forEach(article => {
+                    articlePromises.push(requests.insertCompanyArticle(article))
+                })
+                Promise.all(articlePromises).then(values => {
+                    requests.getCompanyArticles(name).then(articles => {
+                        resolve(articles)
+                    })
+                }).catch(error => {
+                    console.log("error inserting articles, returning empty array")
+                    console.error(error)
+                    resolve([])
+                })
+            }).catch(err => {reject(err)})
+        } catch (err){
+            reject(err)
         }
-        articles.push(article);
-    });
-    return articles;
+    })
+    // var articlesUrl = "https://www.csrhub.com/CSR_and_sustainability_information/" + name + "/CSR_news";
+    // const $ = await fetchArticles(articlesUrl);
+    // let articles = [];
+    // $(".content-page__news_feed a").each(function (i) {
+    //     var article = {
+    //         "title": $(this).text().trim(),
+    //         "url": $(this).attr('href')
+    //     }
+    //     articles.push(article);
+    // });
+    // const articlePromises = []
+    // articles.forEach(article => {
+    //     articlePromises.push(requests.insertCompanyArticle(article))
+    // })
+    // Promise.all(articlePromises).then(values => {
+    //     requests.getCompanyArticles(name).then(articles => {
+    //         resolve(articles)
+    //     })
+    // }).catch(error => {
+    //     console.log("error inserting articles, returning empty array")
+    //     console.error(error)
+    //     resolve([])
+    // })
 }
 
 const fetchRank = async (rankUrl) => {
@@ -62,4 +103,4 @@ const getRanks = async (name) => {
 }
 
 
-module.exports = getInfo;
+exports.getInfo = getInfo;
