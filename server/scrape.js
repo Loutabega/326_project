@@ -21,6 +21,7 @@ const getInfo = async (siteUrl) => {
         "csrhub": await getRanks($("#bylineInfo").text().trim()),
         "links": requests.getCompanyInfo($("#bylineInfo").text().trim()).links
     };
+    console.log(info)
     return info;
 }
 
@@ -60,29 +61,6 @@ exports.getArticles = (name) => {
             reject(err)
         }
     })
-    // var articlesUrl = "https://www.csrhub.com/CSR_and_sustainability_information/" + name + "/CSR_news";
-    // const $ = await fetchArticles(articlesUrl);
-    // let articles = [];
-    // $(".content-page__news_feed a").each(function (i) {
-    //     var article = {
-    //         "title": $(this).text().trim(),
-    //         "url": $(this).attr('href')
-    //     }
-    //     articles.push(article);
-    // });
-    // const articlePromises = []
-    // articles.forEach(article => {
-    //     articlePromises.push(requests.insertCompanyArticle(article))
-    // })
-    // Promise.all(articlePromises).then(values => {
-    //     requests.getCompanyArticles(name).then(articles => {
-    //         resolve(articles)
-    //     })
-    // }).catch(error => {
-    //     console.log("error inserting articles, returning empty array")
-    //     console.error(error)
-    //     resolve([])
-    // })
 }
 
 const fetchRank = async (rankUrl) => {
@@ -90,16 +68,35 @@ const fetchRank = async (rankUrl) => {
     return cheerio.load(result.data);
 };
 
-const getRanks = async (name) => {
-    var rankUrl = "https://www.csrhub.com/CSR_and_sustainability_information/" + name;
-    const $ = await fetchRank(rankUrl);
-    let csrhub = {
-        "about": $("div.company-section_descr p").text(),
-        "phone": $("tr:contains('Phone') td").text().slice(9),
-        "industry": $("tr:contains('Industry') td ").text().slice(9),
-        "ratings": $("span.value").html()
-    }
-    return csrhub;
+exports.getRanks = (name) => {
+    return new Promise((resolve, reject) => {
+        try{
+            var rankUrl = "https://www.csrhub.com/CSR_and_sustainability_information/" + name;
+            fetchRank(rankUrl).then($ => {
+                const csrhubInfo = {
+                    "company": name,
+                    "about": $("div.company-section_descr p").text(),
+                    "phone": $("tr:contains('Phone') td").text().slice(9),
+                    "industry": $("tr:contains('Industry') td ").text().slice(9),
+                    "csrhubRating": $("span.value").html(),
+                    links: {website: "www." + encodeURIComponent(name) + ".com", facebook: "Facebook.com/" + encodeURIComponent(name)}
+                }
+                requests.insertCompanyInfo(csrhubInfo).then(value => {
+                    requests.getCompanyInfo(name).then(value => {
+                        resolve(value)
+                    })
+                })
+            }).catch(err => {
+                requests.getCompanyInfo(name).then(value => {
+                    resolve(value)
+                })
+            })
+        } catch (err){
+            resolve(err)
+        }
+    })
+
+    
 }
 
 

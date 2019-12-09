@@ -180,7 +180,7 @@ app.post('/product', function (req, res) {
 
                 companyarticles = getInfo.getArticles(info.comp_name)
                 companyrating = requests.getCompanyRating(info.comp_name)
-                companyinfo = requests.getCompanyInfo(info.comp_name)
+                companyinfo = getInfo.getRanks(info.comp_name)
 
                 Promise.all([companyarticles, companyrating, companyinfo])
                     .then((companyinfofields) => {
@@ -190,9 +190,9 @@ app.post('/product', function (req, res) {
                         const ratings = companyinfofields[1]
                         console.log("ratings: \n")
                         console.log(ratings)
-                        const compinfo = companyinfofields[2]
-                        console.log("compinfo: \n")
-                        console.log(compinfo)
+                        const compInfo = companyinfofields[2]
+                        console.log("compInfo: \n")
+                        console.log(compInfo)
 
                         articles = articles.map((object) => {return {
                             url: object.url, 
@@ -201,11 +201,18 @@ app.post('/product', function (req, res) {
                             excerpt: object.excerpt
                         }})
                         info.articles = articles;
-                        info.location = compinfo.location;
-                        info.about = compinfo.about;
-                        info.links = compinfo.links;
-                        info.industry = compinfo.industry;
-                        info.ratings = ratings.overallAverage;
+                        info.location = compInfo.location;
+                        info.about = compInfo.about;
+                        info.links = compInfo.links;
+                        info.industry = compInfo.industry;
+                        info.phone = compInfo.phone
+                        info.csrhubRating = compInfo.csrhubRating;
+                        if (ratings){
+                            info.ratings = ratings.overallAverage;
+                        }
+                        else {
+                            info.ratings = "None"
+                        }
 
                         console.log("\n\nFinal Info:")
                         console.log(info)

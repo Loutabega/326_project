@@ -18,6 +18,8 @@ const CompanyInfoSchema = new mongoose.Schema({
     company: {type: String, required: true},
     industry: {type: String},
     location: {type: String},
+    csrhubRating: {type: String},
+    phone: {type: String},
     about: {type: String},
     links: {
         type: {website: {type: String}, facebook: {type: String}},
