@@ -21,7 +21,6 @@ const getInfo = async (siteUrl) => {
         "csrhub": await getRanks($("#bylineInfo").text().trim()),
         "links": requests.getCompanyInfo($("#bylineInfo").text().trim()).links
     };
-    console.log(info)
     return info;
 }
 
