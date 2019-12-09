@@ -32,4 +32,4 @@ const UserReviewSchema = new mongoose.Schema({
     review : {type : String}
 })
 
-module.exports = {connection: mongoose, company: CompanyInfoSchema, rating: CompanyRatingSchema, article: CompanyArticleSchema,review: UserReviewSchema}
+module.exports = {connection: mongoose, company: CompanyInfoSchema, rating: CompanyRatingSchema, article: CompanyArticleSchema, review: UserReviewSchema}
