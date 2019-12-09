@@ -60,6 +60,19 @@ app.get('/companies/:company/info', (req, res) => {
     })
 })
 
+app.get('compaies/:company/review',(req,res)=>{
+    const company = req.params.company
+    requests.getUserReview(company).then(
+        (review)=>{
+            console.log(review)
+            res.json(review)
+        },
+        (reason) =>{
+            console.log(reason)
+            res.sendStatus(500)
+        })
+})
+
 app.post('companies/:company/article', (req,res) => {
     /* {
         url: (link to the article)
@@ -106,6 +119,27 @@ app.post('companies/:company/info', (req,res) => {
             website: "https://www.coca-cola.com/",
             facebook: "https://www.facebook.com/CocaColaUnitedStates/"
         }
+    }
+    */
+})
+
+app.post('companies/:company/reivew', (req,res) => {
+    let reivew = req.body
+    reivew.company = req.params.company
+    requests.insertCompanyInfo(review).then((info) => {
+        console.log("Successfully inserted review")
+        res.sendStatus(200)
+    }, (reason) => {
+        console.log(reason)
+        res.sendStatus(500)
+    })
+    /* example companyInfo:
+    {
+        company: "CocaCola",
+        title : "This company is nice",
+        user : ""
+        rating : "4.5",
+        review : "hohohoho"
     }
     */
 })
