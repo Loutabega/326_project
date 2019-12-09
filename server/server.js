@@ -110,8 +110,6 @@ app.post('companies/:company/info', (req,res) => {
     */
 })
 
-
-
 app.get('/', function (req, res) {
     res.render('mainPage');
 })
@@ -123,50 +121,92 @@ app.post('/processLink', function (req, res) {
 //example of rendering a page with json object
 app.post('/product', function (req, res) {
     siteURL = req.body.searchBar;
-    siteURL = req.body.searchBar;    
+    const info = {}
     axios.get(siteURL)
         .then((response) => {
             if (response.status === 200) {
                 const html = response.data;
                 const $ = cheerio.load(html);
-                let info = {
-                    "product-name": $("#productTitle").text().trim(),
-                    "comp-name": $("#bylineInfo").text().trim(),
-                    "product-img": $('#landingImage').attr('src')
-                };
-                res.render('product', info);
+                info.product_name = $("#productTitle").text().trim();
+                info.comp_name = $("#bylineInfo").text().trim();
+                info.product_img = $('#landingImage').attr('src');
+
+                companyArticles = requests.getCompanyArticles(info.comp_name)
+                companyRating = requests.getCompanyRating(info.comp_name)
+                companyInfo = requests.getCompanyInfo(info.comp_name)
+
+                Promise.all([companyArticles, companyRating, companyInfo])
+                    .then((companyInfoFields) => {
+                        let articles = companyInfoFields[0]
+                        const ratings = companyInfoFields[1]
+                        console.log(ratings)
+                        const compInfo = companyInfoFields[2]
+                        articles = articles.map((object) => {return {
+                            url: object.url, 
+                            title: object.title, 
+                            published_date: object.published_date,
+                            excerpt: object.excerpt
+                        }})
+                        info.articles = articles;
+                        info.location = compInfo.location;
+                        info.about = compInfo.about;
+                        info.links = compInfo.links;
+                        info.industry = compInfo.industry;
+                        info.ratings = ratings.overallAverage;
+
+                        console.log(info)
+
+                        res.render('product', info);
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+
+
+                // let info = {
+                //     "product_name": $("#productTitle").text().trim(),
+                //     "comp_name": $("#bylineInfo").text().trim(),
+                //     "product_img": $('#landingImage').attr('src')
+                // };
+
+
             }
-        }, (error) => console.log(err));
+        }, (error) => {console.log(error)})
+        .then(($) => {
+            
+        }).catch(error => console.log(error))
+    
 
-    info = {
-        "product-name": "Wildorn Dover Premium Mens Ski Jacket - Designed in USA - Insulated Waterproof",
-        "product-img": "./img/jacket.jpg",
-        "comp-name": "Amazon",
-        "comp-logo": "./img/amazon.png",
-        "location": "Seattle, WA",
-        "industry": "Online Marketplace",
-        "about": "Amazon.com, Inc., is an American multinational technology company based in Seattle that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. It is considered one of the Big Four tech companies, along with Google, Apple, and Facebook",
-        "ratings": 4.2,
-        "links": {
-            "Website": "https://amazon.com",
-            "Facebook": "https://facebook.com"
-        },
-        "articles": [
-            {
-                "title": "One thing I was sure of, that my uncle Leo was definitely the hero of my childhood.",
-                "published_date": "October 17, 2008",
-                "excerpt": "The smell of his Old Spice cologne carried me back into that lost childhood more than the home movies did. My uncle didn't know it, but It was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. Leo was the last dinosaur that smelled of cheap cologne.",
-                "url": "https://nytimes.com"
-            },
+    // info = {
+    //     "product_name": "Wildorn Dover Premium Mens Ski Jacket - Designed in USA - Insulated Waterproof",
+    //     "product_img": "./img/jacket.jpg",
+    //     "comp_name": "Amazon",
+    //     "comp_logo": "./img/amazon.png",
+    //     "location": "Seattle, WA",
+    //     "industry": "Online Marketplace",
+    //     "about": "Amazon.com, Inc., is an American multinational technology company based in Seattle that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. It is considered one of the Big Four tech companies, along with Google, Apple, and Facebook",
+    //     "ratings": 4.2,
+    //     "links": {
+    //         "website": "https://amazon.com",
+    //         "facebook": "https://facebook.com"
+    //     },
+    //     "articles": [
+    //         {
+    //             "title": "One thing I was sure of, that my uncle Leo was definitely the hero of my childhood.",
+    //             "published_date": "October 17, 2008",
+    //             "excerpt": "The smell of his Old Spice cologne carried me back into that lost childhood more than the home movies did. My uncle didn't know it, but It was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. Leo was the last dinosaur that smelled of cheap cologne.",
+    //             "url": "https://nytimes.com"
+    //         },
 
-            {
-                "title": "Splintered Isle: A Journey Through Brexit Britain",
-                "published_date": "December 7, 2019",
-                "excerpt": "The smell of his Old Spice cologne carried me back into that lost childhood more than the home movies did. My uncle didn't know it, but It was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. Leo was the last dinosaur that smelled of cheap cologne.",
-                "url": "https://nytimes.com"
-            },
-        ]
-    }
+    //         {
+    //             "title": "Splintered Isle: A Journey Through Brexit Britain",
+    //             "published_date": "December 7, 2019",
+    //             "excerpt": "The smell of his Old Spice cologne carried me back into that lost childhood more than the home movies did. My uncle didn't know it, but It was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. Leo was the last dinosaur that smelled of cheap cologne.",
+    //             "url": "https://nytimes.com"
+    //         },
+    //     ]
+    // }
+
+
     
 })
 
@@ -254,3 +294,22 @@ const GoogleInfo = {
 // }
 
 // testInsertInfo(AmazonInfo, CocaColaInfo, GoogleInfo)
+
+// let company = "CocaCola"
+// companyArticles = requests.getCompanyArticles(company)
+// companyRating = requests.getCompanyRating(company)
+// companyInfo = requests.getCompanyInfo(company)
+
+// Promise.all([companyArticles, companyRating, companyInfo]).then((companyInfoFields) => {
+//     let articles = companyInfoFields[0]
+//     const ratings = companyInfoFields[1]
+//     const compInfo = companyInfoFields[2]
+
+//     console.log("articles: \n" + articles)
+//     console.log("ratings: \n" + ratings)
+//     console.log("info: \n" + compInfo)
+
+//     articles = articles.map((object) => { return { url: object.url}})
+
+//     console.log("\n\n mapped articles: " + articles[0].url)
+// })

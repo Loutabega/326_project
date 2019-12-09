@@ -11,11 +11,9 @@ function getCompanyArticles(company) {
         try{
             Article.find({ company: company }, (err, articles) => {
                 if (err){
-                    console.log("Unsuccessful in reading articles")
                     reject(err)
                 }
                 else{
-                    console.log("Articles: " + articles)
                     resolve(articles)
                 }
             })
@@ -32,7 +30,8 @@ function getCompanyRating(company) {
                 {$match: {company: company}}, 
                 {$group: {_id: "$company", overallAverage: {$avg: "$overallRating"}}}
             ]).then(ratings => {
-                resolve(ratings)
+                console.log("Ratings from rating function: " + ratings)
+                resolve(ratings[0])
             }, reason => {
                 console.log(reason)
                 reject(reason)
