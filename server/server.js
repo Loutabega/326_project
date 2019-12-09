@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const path = require('path')
-const PORT = process.env.PORT || 2986
+const PORT = process.env.PORT || 3000
 const mongoose = require('./db')
 var mustacheExpress = require('mustache-express')
 
@@ -17,6 +17,13 @@ const CompanyRatingSchema = new mongoose.Schema({
     overallRating: {type: Number, min: 0, max: 100}
 })
 const Rating = mongoose.model("Rating", CompanyRatingSchema)
+
+const UserReviewSchema = new mongoose.Schema({
+    title : {type: String},
+    user : {type: String},
+    textarea_form : {type: String}
+})
+const Review = mongoose.model("Review", UserReviewSchema)
 
 // Routing
 const UIRouter = express.Router()
