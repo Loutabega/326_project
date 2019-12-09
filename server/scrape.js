@@ -1,30 +1,38 @@
 const axios = require("axios")
 const cheerio = require("cheerio")
-
+const requests = require('./mongo_requests')
 
 const fetchData = async (siteUrl) => {
-    const result = await axios.get(siteUrl);
+    const result = await axios.get(siteUrl, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36'
+        }
+    });
     return cheerio.load(result.data);
 };
 
-const getInfo = async (siteUrl, articlesUrl, rankUrl) => {
+const getInfo = async (siteUrl) => {
     const $ = await fetchData(siteUrl);
     let info = {
         "product_name": $("#productTitle").text().trim(),
         "comp_name": $("#bylineInfo").text().trim(),
         "product_img": $('#landingImage').attr('src'),
-        "articles": await getArticles(articlesUrl),
-        "csrhub": await getRanks(rankUrl)
+        "articles": await getArticles($("#bylineInfo").text().trim()),
+        "csrhub": await getRanks($("#bylineInfo").text().trim()),
+        "links": requests.getCompanyInfo($("#bylineInfo").text().trim()).links
     };
+    console.log(info)
     return info;
 }
 
 const fetchArticles = async (articlesUrl) => {
+    
     const result = await axios.get(articlesUrl);
     return cheerio.load(result.data);
 };
 
-const getArticles = async (articlesUrl) => {
+const getArticles = async (name) => {
+    var articlesUrl = "https://www.csrhub.com/CSR_and_sustainability_information/" + name + "/CSR_news";
     const $ = await fetchArticles(articlesUrl);
     let articles = [];
     $(".content-page__news_feed a").each(function (i) {
@@ -42,7 +50,8 @@ const fetchRank = async (rankUrl) => {
     return cheerio.load(result.data);
 };
 
-const getRanks = async (rankUrl) => {
+const getRanks = async (name) => {
+    var rankUrl = "https://www.csrhub.com/CSR_and_sustainability_information/" + name;
     const $ = await fetchRank(rankUrl);
     let csrhub = {
         "about": $("div.company-section_descr p").text(),

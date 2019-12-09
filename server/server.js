@@ -158,36 +158,34 @@ app.post('/processLink', function (req, res) {
 app.post('/product', async function (req, res) {
     var siteURL = req.body.searchBar;
 
-    ///Block added here
-    var articlesUrl = "https://www.csrhub.com/CSR_and_sustainability_information/Coca-Cola-Enterprises" + "/CSR_news"; //The company name(Coca-Cola) in this link should be fetch from the database
-    var rankUrl = "https://www.csrhub.com/CSR_and_sustainability_information/Coca-Cola-Enterprises"; //The company name(Coca-Cola) in this link should be fetch from the database
-    var info = await getInfo(siteURL, articlesUrl, rankUrl);
-    
+    //Test Block added here
+   
+    var info = await getInfo(siteURL);   
     res.render('product', info);
     ///Block end here
 
-    const info = {}
-    axios.get(siteURL)
+    //const info = {}
+    axios.get(siteurl)
         .then((response) => {
             if (response.status === 200) {
                 const html = response.data;
                 const $ = cheerio.load(html);
  
 
-                info.product_name = $("#productTitle").text().trim();
-                info.comp_name = $("#bylineInfo").text().trim();
-                info.product_img = $('#landingImage').attr('src');
+                info.product_name = $("#producttitle").text().trim();
+                info.comp_name = $("#bylineinfo").text().trim();
+                info.product_img = $('#landingimage').attr('src');
 
-                companyArticles = requests.getCompanyArticles(info.comp_name)
-                companyRating = requests.getCompanyRating(info.comp_name)
-                companyInfo = requests.getCompanyInfo(info.comp_name)
+                companyarticles = requests.getcompanyarticles(info.comp_name)
+                companyrating = requests.getcompanyrating(info.comp_name)
+                companyinfo = requests.getcompanyinfo(info.comp_name)
 
-                Promise.all([companyArticles, companyRating, companyInfo])
-                    .then((companyInfoFields) => {
-                        let articles = companyInfoFields[0]
-                        const ratings = companyInfoFields[1]
+                promise.all([companyarticles, companyrating, companyinfo])
+                    .then((companyinfofields) => {
+                        let articles = companyinfofields[0]
+                        const ratings = companyinfofields[1]
                         console.log(ratings)
-                        const compInfo = companyInfoFields[2]
+                        const compinfo = companyinfofields[2]
                         articles = articles.map((object) => {return {
                             url: object.url, 
                             title: object.title, 
@@ -195,11 +193,11 @@ app.post('/product', async function (req, res) {
                             excerpt: object.excerpt
                         }})
                         info.articles = articles;
-                        info.location = compInfo.location;
-                        info.about = compInfo.about;
-                        info.links = compInfo.links;
-                        info.industry = compInfo.industry;
-                        info.ratings = ratings.overallAverage;
+                        info.location = compinfo.location;
+                        info.about = compinfo.about;
+                        info.links = compinfo.links;
+                        info.industry = compinfo.industry;
+                        info.ratings = ratings.overallaverage;
 
                         console.log(info)
 
@@ -208,12 +206,6 @@ app.post('/product', async function (req, res) {
                         console.log(err)
                     })
 
-
-                // let info = {
-                //     "product_name": $("#productTitle").text().trim(),
-                //     "comp_name": $("#bylineInfo").text().trim(),
-                //     "product_img": $('#landingImage').attr('src')
-                // };
 
 
             }
