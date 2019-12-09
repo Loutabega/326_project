@@ -65,7 +65,7 @@ function getCompanyInfo(company){
 function getUserReview(company){
     return new Promise((resolve, reject)=>{
         try{
-            Review.findOne({ company: company}, (err, res)=>{
+            Review.find({ company: company}, (err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -79,6 +79,7 @@ function getUserReview(company){
         }
     })
 }
+
 function insertCompanyArticle(article) {
     return new Promise((resolve, reject) => {
         try{
@@ -145,7 +146,7 @@ function insertUserReview(review){
     return new Promise((resolve, reject) =>{
         try{
             Review.findOneAndUpdate(
-                {company : review.company},
+                {user : review.user},
                 reivew,
                 {upsert: true, new: true, runValidators: true},
                 (err, doc) => {
@@ -167,7 +168,7 @@ function insertUserReview(review){
 exports.insertCompanyArticle = insertCompanyArticle
 exports.insertCompanyRating = insertCompanyRating
 exports.insertCompanyInfo = insertCompanyInfo
-exports.insertUserReview =insertUserReview
+exports.insertUserReview = insertUserReview
 exports.getCompanyArticles = getCompanyArticles
 exports.getCompanyRating = getCompanyRating
 exports.getCompanyInfo= getCompanyInfo
