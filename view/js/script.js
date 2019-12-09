@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $("#tabs").tabs();
 
-    $("#rating span").click(function(){
+    $("#rating_stars span").click(function(){
 
         $(this).parent().children("span").removeClass("on");
         $(this).addClass("on").prevAll("span").addClass("on");
@@ -17,8 +17,8 @@ $(document).ready(function () {
         $("#review_form").hide();
     })
     $("#review_form").submit(function(){
-        var stars = $("#rating span").parent().find(".star.on").length;
-        var errorCount =0;
+        var stars = $("#rating_stars span").parent().find(".star.on").length;
+        $("#rating_text").val(stars);
         var data = $("#rating_form").serializeObject();
         alert(data);
      });
