@@ -146,8 +146,8 @@ function insertUserReview(review){
     return new Promise((resolve, reject) =>{
         try{
             Review.findOneAndUpdate(
-                {user : review.user},
-                reivew,
+                {user : review.user, company: review.company},
+                review,
                 {upsert: true, new: true, runValidators: true},
                 (err, doc) => {
                     if (err) {
@@ -160,7 +160,7 @@ function insertUserReview(review){
                     }
                 })
         }catch (err){
-                reject(err)
+            reject(err)
         }   
     })
 }

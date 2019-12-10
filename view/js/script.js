@@ -1,8 +1,10 @@
 $(document).ready(function () {
     $("#tabs").tabs();
 
-    $("#rating_stars span").click(function(){
+    let companyName = $("#companyName").html().trim()
+    $("#review_form").attr("action", "/companies/" + companyName + "/review")
 
+    $("#rating_stars span").click(function(){
         $(this).parent().children("span").removeClass("on");
         $(this).addClass("on").prevAll("span").addClass("on");
         return false;

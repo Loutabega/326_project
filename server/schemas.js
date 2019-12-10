@@ -5,7 +5,7 @@ const CompanyArticleSchema = new mongoose.Schema({
     company: {type: String, required: true},
     url: {type: String},
     title: {type: String, default: "No Title Provided"},
-    published_date: {type: String, default: "Jan 1, 1642"},
+    published_date: {type: String, default: "Month Day, Year"},
     excerpt: {type: String, default: "No excerpt Provided"}
 })
 
@@ -31,7 +31,8 @@ const UserReviewSchema = new mongoose.Schema({
     company: {type : String, required : true},
     title : {type : String},
     user : {type : String},
-    review : {type : String}
+    review : {type : String},
+    rating : {type : Number}
 })
 
 module.exports = {connection: mongoose, company: CompanyInfoSchema, rating: CompanyRatingSchema, article: CompanyArticleSchema, review: UserReviewSchema}

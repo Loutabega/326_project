@@ -39,7 +39,8 @@ exports.getArticles = (name) => {
                 $(".content-page__news_feed a").each(function (i) {
                     var article = {
                         "title": $(this).text().trim(),
-                        "url": $(this).attr('href')
+                        "url": $(this).attr('href'),
+                        company: name
                     }
                     articles.push(article);
                 });

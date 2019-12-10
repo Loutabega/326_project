@@ -61,7 +61,7 @@ app.get('/companies/:company/info', (req, res) => {
     })
 })
 
-app.get('compaies/:company/review',(req,res)=>{
+app.get('/companies/:company/review',(req,res)=>{
     const company = req.params.company
     requests.getUserReview(company).then(
         (review)=>{
@@ -74,7 +74,7 @@ app.get('compaies/:company/review',(req,res)=>{
         })
 })
 
-app.post('companies/:company/article', (req,res) => {
+app.post('/companies/:company/article', (req,res) => {
     /* {
         url: (link to the article)
     } */
@@ -89,7 +89,7 @@ app.post('companies/:company/article', (req,res) => {
     
 })
 
-app.post('companies/:company/rating', (req,res) => {
+app.post('/companies/:company/rating', (req,res) => {
     let rating = req.body 
     rating.company = req.params.company
     requests.insertCompanyRating(rating).then((value) => {
@@ -100,7 +100,7 @@ app.post('companies/:company/rating', (req,res) => {
     })
 })
 
-app.post('companies/:company/info', (req,res) => {
+app.post('/companies/:company/info', (req,res) => {
     let companyInfo = req.body
     companyInfo.company = req.params.company
     requests.insertCompanyInfo(companyInfo).then((info) => {
@@ -124,25 +124,16 @@ app.post('companies/:company/info', (req,res) => {
     */
 })
 
-app.post('companies/:company/reivew', (req,res) => {
-    let reivew = req.body
-    reivew.company = req.params.company
-    requests.insertCompanyInfo(review).then((info) => {
+app.post('/companies/:company/review', (req,res) => {
+    let review = req.body
+    review.company = req.params.company
+    review.rating = Number(review.rating)
+    Promise.all([requests.insertUserReview(review), requests.insertCompanyRating({company: req.params.company, overallRating: review.rating})]).then((info) => {
         console.log("Successfully inserted review")
-        res.sendStatus(200)
     }, (reason) => {
         console.log(reason)
         res.sendStatus(500)
     })
-    /* example companyInfo:
-    {
-        company: "CocaCola",
-        title : "This company is nice",
-        user : ""
-        rating : "4.5",
-        review : "hohohoho"
-    }
-    */
 })
 
 app.get('/', function (req, res) {
