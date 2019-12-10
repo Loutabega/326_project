@@ -35,4 +35,4 @@ const UserReviewSchema = new mongoose.Schema({
     rating : {type : Number}
 })
 
-module.exports = {connection: mongoose, company: CompanyInfoSchema, rating: CompanyRatingSchema, article: CompanyArticleSchema, review: UserReviewSchema}
+module.exports = {company: CompanyInfoSchema, rating: CompanyRatingSchema, article: CompanyArticleSchema, review: UserReviewSchema}
