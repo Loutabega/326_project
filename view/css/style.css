@@ -269,3 +269,19 @@ p {
 #footer-list a{
     color: white
 }
+
+#td_title{
+    width: 25%
+}
+
+#td_user{
+    width: 20%
+}
+
+#td_rating{
+    width: 13%
+}
+
+#td_review{
+    width: 42%
+}

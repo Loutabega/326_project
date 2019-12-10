@@ -61,7 +61,7 @@ app.get('/companies/:company/info', (req, res) => {
     })
 })
 
-app.get('compaies/:company/review',(req,res)=>{
+app.get('/companies/:company/review',(req,res)=>{
     const company = req.params.company
     requests.getUserReview(company).then(
         (review)=>{
@@ -74,7 +74,7 @@ app.get('compaies/:company/review',(req,res)=>{
         })
 })
 
-app.post('companies/:company/article', (req,res) => {
+app.post('/companies/:company/article', (req,res) => {
     /* {
         url: (link to the article)
     } */
@@ -89,7 +89,7 @@ app.post('companies/:company/article', (req,res) => {
     
 })
 
-app.post('companies/:company/rating', (req,res) => {
+app.post('/companies/:company/rating', (req,res) => {
     let rating = req.body 
     rating.company = req.params.company
     requests.insertCompanyRating(rating).then((value) => {
@@ -100,7 +100,7 @@ app.post('companies/:company/rating', (req,res) => {
     })
 })
 
-app.post('companies/:company/info', (req,res) => {
+app.post('/companies/:company/info', (req,res) => {
     let companyInfo = req.body
     companyInfo.company = req.params.company
     requests.insertCompanyInfo(companyInfo).then((info) => {
@@ -124,25 +124,16 @@ app.post('companies/:company/info', (req,res) => {
     */
 })
 
-app.post('companies/:company/reivew', (req,res) => {
-    let reivew = req.body
-    reivew.company = req.params.company
-    requests.insertCompanyInfo(review).then((info) => {
+app.post('/companies/:company/review', (req,res) => {
+    let review = req.body
+    review.company = req.params.company
+    review.rating = Number(review.rating)
+    Promise.all([requests.insertUserReview(review), requests.insertCompanyRating({company: req.params.company, overallRating: review.rating})]).then((info) => {
         console.log("Successfully inserted review")
-        res.sendStatus(200)
     }, (reason) => {
         console.log(reason)
         res.sendStatus(500)
     })
-    /* example companyInfo:
-    {
-        company: "CocaCola",
-        title : "This company is nice",
-        user : ""
-        rating : "4.5",
-        review : "hohohoho"
-    }
-    */
 })
 
 app.get('/', function (req, res) {
@@ -157,12 +148,6 @@ app.post('/processLink', function (req, res) {
 //example of rendering a page with json object
 app.post('/product', function (req, res) {
     var siteURL = req.body.searchBar;
-
-    //Test Block added here
-   
-    // var info = await getInfo(siteURL);   
-    // res.render('product', info);
-    //Block end here
 
     const info = {}
     axios.get(siteURL)
@@ -181,8 +166,9 @@ app.post('/product', function (req, res) {
                 companyarticles = getInfo.getArticles(info.comp_name)
                 companyrating = requests.getCompanyRating(info.comp_name)
                 companyinfo = getInfo.getRanks(info.comp_name)
+                companyReviews = requests.getUserReviews(info.comp_name)
 
-                Promise.all([companyarticles, companyrating, companyinfo])
+                Promise.all([companyarticles, companyrating, companyinfo, companyReviews])
                     .then((companyinfofields) => {
                         let articles = companyinfofields[0]
                         console.log("articles: \n")
@@ -193,6 +179,7 @@ app.post('/product', function (req, res) {
                         const compInfo = companyinfofields[2]
                         console.log("compInfo: \n")
                         console.log(compInfo)
+                        let reviews = companyinfofields[3]
 
                         articles = articles.map((object) => {return {
                             url: object.url, 
@@ -200,7 +187,14 @@ app.post('/product', function (req, res) {
                             published_date: object.published_date,
                             excerpt: object.excerpt
                         }})
+                        reviews = reviews.map((doc) => {return {
+                            title: doc.title,
+                            user: doc.user,
+                            rating: doc.rating,
+                            review: doc.review
+                        }})
                         info.articles = articles;
+                        info.reviews = reviews
                         info.location = compInfo.location;
                         info.about = compInfo.about;
                         info.links = compInfo.links;

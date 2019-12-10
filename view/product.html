@@ -64,7 +64,7 @@
                           <div style="font-size: 30px;" class="col-md-6">
                               <p>
                                   By
-                                  <a href={{links.website}}>
+                                  <a id="companyName" href={{links.website}}>
                                       {{comp_name}}
                                                                       </a>
                               </p>
@@ -183,16 +183,16 @@
                                     <tr>
                                       <th>Title</th>
                                       <th>User</th>
-                                      <th>Rate</th>
+                                      <th>Rating</th>
                                       <th>Review</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr>
-                                      <td>{{title}}</td>
-                                      <td>{{user}}</td>
-                                      <td>{{rate}}</td>
-                                      <td>{{review}}</td>
+                                      <td id="td_title">{{title}}</td>
+                                      <td id="td_user">{{user}}</td>
+                                      <td id="td_rating">{{rating}}</td>
+                                      <td id="td_review">{{review}}</td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -205,9 +205,9 @@
                         </div>
                         <button type="button" class="btn btn-primary" id="createReviewBtn" 
                                 style="background-color: black; border:none; margin-top: 10px;">Create</button>
-                            <form action="compaies/:company/review" method="POST" class="form-horizontal" id="review_form">                           
+                            <form action="companies/:company/review" method="POST" class="form-horizontal" id="review_form">                           
                                 <div class="form-group" id="rating_form">
-                                    <label class="col-md-1">Rating :</label>
+                                    <label class="col-md-1">Rating:</label>
                                     <div class="col-md-9" id="rating_stars">
                                         <span class="star"></span>    
                                         <span class="star"></span>    
@@ -224,7 +224,7 @@
                                     <input type="text" class="form-control" name="user" placeholder="User name">                
                                 </div>
                                 <div class="form-group" id="textarea_form">   
-                                    <textarea class="form-control input-lg" name="review_area" row="3" placeholder="Write a review about this company..."></textarea>
+                                    <textarea class="form-control input-lg" name="review" row="3" placeholder="Write a review about this company..."></textarea>
                                 </div> 
                                 <div class="form-group" id="bnt_form">  
                                     <input class="btn btn-dark" type="submit" value="Submit">
