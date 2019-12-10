@@ -33,31 +33,35 @@ const fetchArticles = async (articlesUrl) => {
 exports.getArticles = (name) => {
     return new Promise((resolve, reject) => {
         try{
-            var articlesUrl = "https://www.csrhub.com/CSR_and_sustainability_information/" + name + "/CSR_news";
-            fetchArticles(articlesUrl).then($ => {
-                let articles = [];
-                $(".content-page__news_feed a").each(function (i) {
-                    var article = {
-                        "title": $(this).text().trim(),
-                        "url": $(this).attr('href'),
-                        company: name
-                    }
-                    articles.push(article);
-                });
-                const articlePromises = []
-                articles.forEach(article => {
-                    articlePromises.push(requests.insertCompanyArticle(article))
-                })
-                Promise.all(articlePromises).then(values => {
-                    requests.getCompanyArticles(name).then(articles => {
-                        resolve(articles)
+            const companyPageURL = "https://www.csrhub.com/CSR_and_sustainability_information/" + name;
+            fetchArticles(companyPageURL).then($ => {
+                const articlesUrl = "https://www.csrhub.com/" + $(".company-section_news-and-jobs :first-child").attr('href')
+                console.log(articlesUrl)
+                fetchArticles(articlesUrl).then($ => {
+                    let articles = [];
+                    $(".content-page__news_feed a").each(function (i) {
+                        var article = {
+                            "title": $(this).text().trim(),
+                            "url": $(this).attr('href'),
+                            company: name
+                        }
+                        articles.push(article);
+                    });
+                    const articlePromises = []
+                    articles.forEach(article => {
+                        articlePromises.push(requests.insertCompanyArticle(article))
                     })
-                }).catch(error => {
-                    console.log("error inserting articles, returning empty array")
-                    console.error(error)
-                    resolve([])
-                })
-            }).catch(err => {reject(err)})
+                    Promise.all(articlePromises).then(values => {
+                        requests.getCompanyArticles(name).then(articles => {
+                            resolve(articles)
+                        })
+                    }).catch(error => {
+                        console.log("error inserting articles, returning empty array")
+                        console.error(error)
+                        resolve([])
+                    })
+                }).catch(err => {reject(err)})
+            }).catch(err => reject(err))
         } catch (err){
             reject(err)
         }
