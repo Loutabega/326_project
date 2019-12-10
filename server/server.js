@@ -147,8 +147,16 @@ app.post('/processLink', function (req, res) {
 
 //example of rendering a page with json object
 app.post('/product', function (req, res) {
-    var siteURL = req.body.searchBar;
-
+    let siteURL = req.body.searchBar;
+    let modifiedSiteURL = siteURL.substring(0, siteURL.lastIndexOf('?'))
+    if (modifiedSiteURL.length != 0){
+        if (modifiedSiteURL.includes("ref=")){
+            siteURL = modifiedSiteURL.substring(0, modifiedSiteURL.lastIndexOf('/'))
+        } else {
+            siteURL = modifiedSiteURL
+        }
+    }
+    console.log(siteURL)
     const info = {}
     axios.get(siteURL)
         .then((response) => {
@@ -156,12 +164,9 @@ app.post('/product', function (req, res) {
                 const html = response.data;
                 const $ = cheerio.load(html);
  
-
                 info.product_name = $("#productTitle").text().trim();
                 info.comp_name = $("#bylineInfo").text().trim();
                 info.product_img = $('#landingImage').attr('src');
-
-                console.log("Company: " + info.comp_name)
 
                 companyarticles = getInfo.getArticles(info.comp_name)
                 companyrating = requests.getCompanyRating(info.comp_name)
@@ -171,14 +176,8 @@ app.post('/product', function (req, res) {
                 Promise.all([companyarticles, companyrating, companyinfo, companyReviews])
                     .then((companyinfofields) => {
                         let articles = companyinfofields[0]
-                        console.log("articles: \n")
-                        console.log(articles)
                         const ratings = companyinfofields[1]
-                        console.log("ratings: \n")
-                        console.log(ratings)
                         const compInfo = companyinfofields[2]
-                        console.log("compInfo: \n")
-                        console.log(compInfo)
                         let reviews = companyinfofields[3]
 
                         articles = articles.map((object) => {return {
@@ -193,6 +192,7 @@ app.post('/product', function (req, res) {
                             rating: doc.rating,
                             review: doc.review
                         }})
+
                         info.articles = articles;
                         info.reviews = reviews
                         info.location = compInfo.location;
@@ -207,22 +207,13 @@ app.post('/product', function (req, res) {
                         else {
                             info.ratings = "None"
                         }
-
-                        console.log("\n\nFinal Info:")
-                        console.log(info)
-
                         res.render('product', info);
                     }).catch((err) => {
                         console.log(err)
                     })
-
-
-
-            }
-        }, (error) => {console.log(error)})
-        .then(($) => {
-            
-        }).catch(error => console.log(error))
+            } else {res.sendStatus(400)}
+        }, (error) => {console.log(error); res.sendStatus(400)})
+        .catch(error => {console.log(error); res.sendStatus(400)})
     
 
     // info = {
@@ -263,38 +254,38 @@ app.post('/product', function (req, res) {
 
 app.listen(PORT, () => {console.log("Main server listening")})
 
-const AmazonInfo = {
-    company: "Amazon",
-    location: "Seattle, WA",
-    industry: "Online Marketplace",
-    about: "Amazon.com, Inc., is an American multinational technology company based in Seattle that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. It is considered one of the Big Four tech companies, along with Google, Apple, and Facebook",
-    links: {
-        website: "https://amazon.com",
-        facebook: "https://facebook.com"
-    }
-}
+// const AmazonInfo = {
+//     company: "Amazon",
+//     location: "Seattle, WA",
+//     industry: "Online Marketplace",
+//     about: "Amazon.com, Inc., is an American multinational technology company based in Seattle that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. It is considered one of the Big Four tech companies, along with Google, Apple, and Facebook",
+//     links: {
+//         website: "https://amazon.com",
+//         facebook: "https://facebook.com"
+//     }
+// }
 
-const CocaColaInfo = {
-    company: "CocaCola",
-    industry: "Food Service",
-    location: "Dallas, TX",
-    about: "CocaCola is a company that blah blah blah",
-    links: {
-        website: "https://www.coca-cola.com/",
-        facebook: "https://www.facebook.com/CocaColaUnitedStates/"
-    }
-}
+// const CocaColaInfo = {
+//     company: "CocaCola",
+//     industry: "Food Service",
+//     location: "Dallas, TX",
+//     about: "CocaCola is a company that blah blah blah",
+//     links: {
+//         website: "https://www.coca-cola.com/",
+//         facebook: "https://www.facebook.com/CocaColaUnitedStates/"
+//     }
+// }
 
-const GoogleInfo = {
-    company: "Google",
-    industry: "Technology",
-    location: "San Francisco, CA",
-    about: "Google is a company that blah blah blah",
-    links: {
-        website: "https://www.google.com/",
-        facebook: "https://www.facebook.com/Google/"
-    }
-}
+// const GoogleInfo = {
+//     company: "Google",
+//     industry: "Technology",
+//     location: "San Francisco, CA",
+//     about: "Google is a company that blah blah blah",
+//     links: {
+//         website: "https://www.google.com/",
+//         facebook: "https://www.facebook.com/Google/"
+//     }
+// }
 
 // console.log("Attempting to insert article: ")
 // requests.insertCompanyArticle({url: "www.google.com"}).then(value => {
