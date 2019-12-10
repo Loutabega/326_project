@@ -149,12 +149,6 @@ app.post('/processLink', function (req, res) {
 app.post('/product', function (req, res) {
     var siteURL = req.body.searchBar;
 
-    //Test Block added here
-   
-    // var info = await getInfo(siteURL);   
-    // res.render('product', info);
-    //Block end here
-
     const info = {}
     axios.get(siteURL)
         .then((response) => {
@@ -172,8 +166,9 @@ app.post('/product', function (req, res) {
                 companyarticles = getInfo.getArticles(info.comp_name)
                 companyrating = requests.getCompanyRating(info.comp_name)
                 companyinfo = getInfo.getRanks(info.comp_name)
+                companyReviews = requests.getUserReviews(info.comp_name)
 
-                Promise.all([companyarticles, companyrating, companyinfo])
+                Promise.all([companyarticles, companyrating, companyinfo, companyReviews])
                     .then((companyinfofields) => {
                         let articles = companyinfofields[0]
                         console.log("articles: \n")
@@ -184,6 +179,7 @@ app.post('/product', function (req, res) {
                         const compInfo = companyinfofields[2]
                         console.log("compInfo: \n")
                         console.log(compInfo)
+                        let reviews = companyinfofields[3]
 
                         articles = articles.map((object) => {return {
                             url: object.url, 
@@ -191,7 +187,14 @@ app.post('/product', function (req, res) {
                             published_date: object.published_date,
                             excerpt: object.excerpt
                         }})
+                        reviews = reviews.map((doc) => {return {
+                            title: doc.title,
+                            user: doc.user,
+                            rating: doc.rating,
+                            review: doc.review
+                        }})
                         info.articles = articles;
+                        info.reviews = reviews
                         info.location = compInfo.location;
                         info.about = compInfo.about;
                         info.links = compInfo.links;

@@ -62,7 +62,7 @@ function getCompanyInfo(company){
     })
 }
 
-function getUserReview(company){
+function getUserReviews(company){
     return new Promise((resolve, reject)=>{
         try{
             Review.find({ company: company}, (err, res)=>{
@@ -172,4 +172,4 @@ exports.insertUserReview = insertUserReview
 exports.getCompanyArticles = getCompanyArticles
 exports.getCompanyRating = getCompanyRating
 exports.getCompanyInfo= getCompanyInfo
-exports.getUserReview = getUserReview
+exports.getUserReviews = getUserReviews
