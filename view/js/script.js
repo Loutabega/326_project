@@ -15,14 +15,16 @@ $(document).ready(function () {
     });
 
     $("#cancel").click(function(){
-        $("#rating span").parent().children("span").removeClass("on");
+        $("#rating_stars span").parent().children("span").removeClass("on");
         $("#review_form").hide();
     })
     $("#review_form").submit(function(){
         var stars = $("#rating_stars span").parent().find(".star.on").length;
         $("#rating_text").val(stars);
-        var data = $("#rating_form").serializeObject();
-        alert(data);
+
+        $("#rating_stars span").parent().children("span").removeClass("on");
+        $(this).trigger("reset");
+        $(this).hide();
      });
 });
 

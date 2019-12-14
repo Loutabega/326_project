@@ -28,7 +28,7 @@
                     </div>                   
                     <div class="search">
                         <div class="search-input">
-                            <form action="/product" method="post">
+                            <form action="/processLink" method="post">
                                 <input type="text" name="searchBar" id="searchBar" size="25" class="url-input-field" placeholder="Paste any products on amazon here..." />
                                 <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
                             </form>
@@ -177,7 +177,6 @@
                       <div class="tab-pane fade" id="tabs-3" role="tabpanel">
                         <h2>Ratings &amp; Reviews</h2>
                         <div class="container" style="margin-top: 50px;">
-                            {{#reviews}} 
                                 <table class="table table-hover">
                                   <thead>
                                     <tr>
@@ -187,6 +186,7 @@
                                       <th>Review</th>
                                     </tr>
                                   </thead>
+                                  {{#reviews}} 
                                   <tbody>
                                     <tr>
                                       <td id="td_title">{{title}}</td>
@@ -195,8 +195,8 @@
                                       <td id="td_review">{{review}}</td>
                                     </tr>
                                   </tbody>
+                                  {{/reviews}}
                                 </table>
-                            {{/reviews}}
                             <div class="text-center">
                                 <div id="loadMore">
                                     <a href="#">Load More</a>

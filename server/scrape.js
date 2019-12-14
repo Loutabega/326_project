@@ -81,7 +81,7 @@ exports.getRanks = (name) => {
                 const csrhubInfo = {
                     "company": name,
                     "about": $("div.company-section_descr p").text(),
-                    "phone": $("tr:contains('Phone') td").text().slice(9),
+                    "phone": $("tr:contains('Phone') td").text().slice(9).replace(/\s+/g, ""),
                     "industry": $("tr:contains('Industry') td ").text().slice(9),
                     "csrhubRating": $("span.value").html(),
                     links: {website: "www." + encodeURIComponent(name) + ".com", facebook: "Facebook.com/" + encodeURIComponent(name)}

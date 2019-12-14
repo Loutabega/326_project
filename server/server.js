@@ -202,7 +202,7 @@ app.post('/product', function (req, res) {
                         info.phone = compInfo.phone
                         info.csrhubRating = compInfo.csrhubRating;
                         if (ratings){
-                            info.ratings = ratings.overallAverage;
+                            info.ratings = ratings.overallAverage.toFixed(2);
                         }
                         else {
                             info.ratings = "None"
