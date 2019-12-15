@@ -128,8 +128,10 @@ app.post('/companies/:company/review', (req,res) => {
     let review = req.body
     review.company = req.params.company
     review.rating = Number(review.rating)
+    req.app.set('url', review.siteURL)
     Promise.all([requests.insertUserReview(review), requests.insertCompanyRating({company: req.params.company, overallRating: review.rating})]).then((info) => {
         console.log("Successfully inserted review")
+        res.redirect('/product')
     }, (reason) => {
         console.log(reason)
         res.sendStatus(500)
@@ -144,13 +146,11 @@ app.post('/processLink', function (req, res) {
     res.redirect(307, '/product');
 })
 
-
-//example of rendering a page with json object
-app.post('/product', function (req, res) {
-    let siteURL = req.body.searchBar;
+app.get('/product', function (req, res) {
+    let siteURL = req.app.get('url')
     let modifiedSiteURL = siteURL.substring(0, siteURL.lastIndexOf('?'))
-    if (modifiedSiteURL.length != 0){
-        if (modifiedSiteURL.includes("ref=")){
+    if (modifiedSiteURL.length != 0) {
+        if (modifiedSiteURL.includes("ref=")) {
             siteURL = modifiedSiteURL.substring(0, modifiedSiteURL.lastIndexOf('/'))
         } else {
             siteURL = modifiedSiteURL
@@ -163,7 +163,7 @@ app.post('/product', function (req, res) {
             if (response.status === 200) {
                 const html = response.data;
                 const $ = cheerio.load(html);
- 
+
                 info.product_name = $("#productTitle").text().trim();
                 info.comp_name = $("#bylineInfo").text().trim();
                 info.product_img = $('#landingImage').attr('src');
@@ -180,18 +180,22 @@ app.post('/product', function (req, res) {
                         const compInfo = companyinfofields[2]
                         let reviews = companyinfofields[3]
 
-                        articles = articles.map((object) => {return {
-                            url: object.url, 
-                            title: object.title, 
-                            published_date: object.published_date,
-                            excerpt: object.excerpt
-                        }})
-                        reviews = reviews.map((doc) => {return {
-                            title: doc.title,
-                            user: doc.user,
-                            rating: doc.rating,
-                            review: doc.review
-                        }})
+                        articles = articles.map((object) => {
+                            return {
+                                url: object.url,
+                                title: object.title,
+                                published_date: object.published_date,
+                                excerpt: object.excerpt
+                            }
+                        })
+                        reviews = reviews.map((doc) => {
+                            return {
+                                title: doc.title,
+                                user: doc.user,
+                                rating: doc.rating,
+                                review: doc.review
+                            }
+                        })
 
                         info.articles = articles;
                         info.reviews = reviews
@@ -201,7 +205,8 @@ app.post('/product', function (req, res) {
                         info.industry = compInfo.industry;
                         info.phone = compInfo.phone
                         info.csrhubRating = compInfo.csrhubRating;
-                        if (ratings){
+                        info.siteURL = siteURL;
+                        if (ratings) {
                             info.ratings = ratings.overallAverage.toFixed(2);
                         }
                         else {
@@ -211,44 +216,19 @@ app.post('/product', function (req, res) {
                     }).catch((err) => {
                         console.log(err)
                     })
-            } else {res.sendStatus(400)}
-        }, (error) => {console.log(error); res.sendStatus(400)})
-        .catch(error => {console.log(error); res.sendStatus(400)})
-    
-
-    // info = {
-    //     "product_name": "wildorn dover premium mens ski jacket - designed in usa - insulated waterproof",
-    //     "product_img": "./img/jacket.jpg",
-    //     "comp_name": "amazon",
-    //     "csrhub": {
-    //        "comp_logo": "./img/amazon.png",
-    //        "phone": "123456789",
-    //        "industry": "online marketplace",
-    //        "about": "amazon.com, inc., is an american multinational technology company based in seattle that focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. it is considered one of the big four tech companies, along with google, apple, and facebook",
-    //        "ratings": 4.2
-    //     }
-    //     "links": {
-    //         "website": "https://amazon.com",
-    //         "facebook": "https://facebook.com"
-    //     },
-    //     "articles": [
-    //         {
-    //             "title": "one thing i was sure of, that my uncle leo was definitely the hero of my childhood.",
-    //             "published_date": "october 17, 2008",
-    //             "excerpt": "the smell of his old spice cologne carried me back into that lost childhood more than the home movies did. my uncle didn't know it, but it was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. leo was the last dinosaur that smelled of cheap cologne.",
-    //             "url": "https://nytimes.com"
-    //         },
-
-    //         {
-    //             "title": "splintered isle: a journey through brexit britain",
-    //             "published_date": "december 7, 2019",
-    //             "excerpt": "the smell of his old spice cologne carried me back into that lost childhood more than the home movies did. my uncle didn't know it, but it was the sweet, cheap smell of car dealers that took me back, and made me dissolve into a dream of the past. leo was the last dinosaur that smelled of cheap cologne.",
-    //             "url": "https://nytimes.com"
-    //         },
-    //     ]
-    // }
+            } else { res.sendStatus(400) }
+        }, (error) => { console.log(error); res.redirect('/product')})
+        .catch(error => { console.log(error); res.redirect('/product') })
 
 
+})
+
+//example of rendering a page with json object
+app.post('/product', function (req, res) {
+    let siteURL = req.body.searchBar
+    req.app.set('url', siteURL)
+    res.redirect('/product')
+   
     
 })
 

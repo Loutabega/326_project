@@ -18,13 +18,11 @@ $(document).ready(function () {
         $("#rating_stars span").parent().children("span").removeClass("on");
         $("#review_form").hide();
     })
-    $("#review_form").submit(function(){
+    $("#review_form").submit(function(e){
         var stars = $("#rating_stars span").parent().find(".star.on").length;
         $("#rating_text").val(stars);
 
         $("#rating_stars span").parent().children("span").removeClass("on");
-        $(this).trigger("reset");
-        $(this).hide();
      });
 });
 
