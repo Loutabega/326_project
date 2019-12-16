@@ -22,8 +22,8 @@ suitable to present to a potential employer.//
     We will use this link to find out which company makes this product, and then reference our database, displaying any user submitted rankings or articles related to the practices of the company.
 
 ### instructions : 
-    Before run the project, to set up, the user will need to install Node, npm and mongoDB. 
-    This project using the mustache template, the user will need to install mustache as well. 
+    Before running the server, to set up, the user will need to install Node, npm and mongoDB. 
+    Since this project is using the mustache template, the user will need to install mustache as well. 
     The user can get Mustache via npm (npm install mustache --save)
     Also, to run the server, the user will need to have a file named .env in the root of the project. 
     Then, copy and paste this link below into the file. 
