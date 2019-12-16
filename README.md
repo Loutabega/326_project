@@ -22,9 +22,13 @@ suitable to present to a potential employer.//
     We will use this link to find out which company makes this product, and then reference our database, displaying any user submitted rankings or articles related to the practices of the company.
 
 ### instructions : 
-    Before running the server, to set up, the user will need to install Node, npm and mongoDB. 
+    Before running the server, to set up, the user will need to install Node express, npm and mongoDB. 
     Since this project is using the mustache template, the user will need to install mustache as well. 
-    The user can get Mustache via npm (npm install mustache --save)
+    The user can get Mustache via npm (npm install mustache-express --save)
+    Install nodejs express via npm (npm install express)
+    Install body-parser module via npm (npm install body-parser)
+    Install axios module via npm (npm install axios)
+    Install cheerio module via npm (npm install cheerio)
     Also, to run the server, the user will need to have a file named .env in the root of the project. 
     Then, copy and paste this link below into the file. 
     "MONGO_URL=mongodb+srv://dbadmin:austintheboss69@cluster0-wbbfa.azure.mongodb.net/test?retryWrites=true&w=majority" 
