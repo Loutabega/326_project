@@ -207,7 +207,7 @@ app.get('/product', function (req, res) {
                         info.csrhubRating = compInfo.csrhubRating;
                         info.siteURL = siteURL;
                         if (ratings) {
-                            info.ratings = 20*(ratings.overallAverage).toFixed(2);
+                            info.ratings = 20*(ratings.overallAverage).toFixed(0);
                         }
                         else {
                             info.ratings = "None"
