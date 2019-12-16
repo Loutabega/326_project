@@ -2,7 +2,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 .page-content {
     flex: 1 0 auto;
 }
@@ -10,39 +9,32 @@ footer .extend {
     border-bottom-style: solid;
     border-bottom-width: 1px;
     height: 150px;
-
 }
-
 #sticky-footer {
     flex-shrink: 0;
 }
-
 footer {
-    position:fixed;
+    position: fixed;;
     background-color: black;
     color: black;
-    height: 150px;
-    bottom: 0;
+    height: 50px;
+    bottom: 0px;
     width: 100%;
 }
-#footer-logo{
+#footer-logo {
     height:100px;
-    width:150px;
+    width:100%;
 }
-
-
-header{
+header {
     background-color: black;
-    height: 50px
-    ;
+    height: 50px;
 }
-.box1{
+.box1 {
     margin : 100px auto;
     width : 500px;
     height : 100px;
 }
-
-.container input#searchBar{
+.container input#searchBar { 
     width: 500px;
     height : 50px;
     background: #fff;
@@ -53,7 +45,7 @@ header{
     border-radius: 10px;
     border: solid;
 }
-#logo{
+#logo {
     position: relative;
     width:500;
     height:160
@@ -66,6 +58,29 @@ header{
     background : black;
     color: white;
 }
-#SearchButtonIcon:hover{
+#SearchButtonIcon:hover {
     color : red;
+}
+.box2 {
+    margin-top: 100px;
+}
+.row{
+    text-align: center;
+}
+.intro_text {
+    margin-top:10px;
+    margin-left:120px;
+    text-align: center;
+    width: 200px;
+    color: black;
+}
+#intro_search {
+    color: black;
+}
+#intro_devil {
+    width: 50px;
+    height: 50px;
+}
+#intro_shopping {
+    color: black;
 }
