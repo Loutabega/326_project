@@ -2,10 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\server",
+    "\\team",
     "\\view",
     "\\view\\css",
     "\\view\\js"
   ],
-  "SelectedNode": "\\server\\scrape.js",
+  "SelectedNode": "\\view\\js\\script.js",
   "PreviewInSolutionExplorer": false
 }
