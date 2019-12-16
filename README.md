@@ -15,14 +15,19 @@ suitable to present to a potential employer.//
 
 
 ### description of the project :
-    Our project aims to rank companies based on how ethical their policies and practices are in regards to human rights, the environment and other criteria affecting consumers. Once complete our website will display a “social good” score not unlike the score shown by rotten tomatoes.com. In this way, companies will be held accountable for their actions, and consumers will have the opportunity to either reward a company who does social good through the purchase of their products, or boycott those who act unethically. Once a user has found a product they intend to purchase from Amazon.com they will post the product link in an input field on our website.  We will use this link to find out which company makes this product, and then reference our database, displaying any user submitted rankings or articles related to the practices of the company.
+    Our project aims to rank companies based on how ethical their policies and practices are in regards to human rights, the environment and other criteria affecting consumers. 
+    Once complete our website will display a “social good” score not unlike the score shown by rotten tomatoes.com. 
+    In this way, companies will be held accountable for their actions, and consumers will have the opportunity to either reward a company who does social good through the purchase of their products, or boycott those who act unethically. 
+    Once a user has found a product they intend to purchase from Amazon.com they will post the product link in an input field on our website.  
+    We will use this link to find out which company makes this product, and then reference our database, displaying any user submitted rankings or articles related to the practices of the company.
 
 ### instructions : 
     Before run the project, to set up, the user will need to install Node, npm and mongoDB. 
     This project using the mustache template, the user will need to install mustache as well. 
     The user can get Mustache via npm (npm install mustache --save)
     Also, to run the server, the user will need to have a file named .env in the root of the project. 
-    Then, copy and paste this link "MONGO_URL=mongodb+srv://dbadmin:austintheboss69@cluster0-wbbfa.azure.mongodb.net/test?retryWrites=true&w=majority" into the file. 
+    Then, copy and paste this link below into the file. 
+    "MONGO_URL=mongodb+srv://dbadmin:austintheboss69@cluster0-wbbfa.azure.mongodb.net/test?retryWrites=true&w=majority" 
     Once the user run the server using command line "npm run server", the main server will be running.
     Since the port is set up as 2986, Type "localhost:2986" in the web browser.
     If the user gets in the E corp main page, paste a product's amazon link and hit the search button. It will display the information of the product's company from the amazon link. 
